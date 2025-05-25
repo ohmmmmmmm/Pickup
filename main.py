@@ -27,7 +27,7 @@ TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 # --- Inventory System Variables ---
 AVAILABLE_ITEMS = ["เครื่องปั้ม", "ยา", "ผ้า", "ชุดเกราะ", "ไวเบ", "เงินแดง", "อุปกรณ์ซ่อมรถ"]
 AVAILABLE_ITEMS.sort()
-LEADER_ROLES = ["หัวหน้าแก๊ง", "Queen", "Boos"] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
+LEADER_ROLES = ["หัวหน้าแก๊ง", "เบิกของ" ] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
 
 TEAM_INVENTORY_FILE = 'team_inventory_dedicated.json'
 TEAM_BANK_FILE = 'team_bank.json'
