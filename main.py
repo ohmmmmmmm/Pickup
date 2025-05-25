@@ -27,7 +27,7 @@ TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 # --- Inventory System Variables ---
 AVAILABLE_ITEMS = ["เงินแดง", "ไวเบรเนียม", "เกาะ", "AED", "Painkiller", "ปูน", "ไม้กระดาน", "ทองคำ", "ทองแดง", "ทับทิม", "เพชร","เหล็ก","เศษเหล็ก"]
 AVAILABLE_ITEMS.sort()
-AVAILABLE_ITEMS = {
+ITEM_EMOJIS = {
                    "เงินแดง": "🩸",
                    "ไวเบรเนียม": "🛡️",
                    "เกาะ": "🧥",   
@@ -383,10 +383,15 @@ def create_control_panel_embed():
     embed = discord.Embed(title="📦 คลังกลางทีม 1M X 32Bit 📦", description="คลิกปุ่มด้านล่างเพื่อดำเนินการ", color=discord.Color.blue()) # Changed color
     # Displaying items: show all items with their quantities, even if 0, or only > 0?
     # For this example, show all defined items.
+
     summary_lines = []
-    for item_name in AVAILABLE_ITEMS: # Iterate in defined order
+    for item_name in AVAILABLE_ITEMS:
         qty = team_inventory.get(item_name, 0)
-        summary_lines.append(f"• {item_name}: **{qty}** ชิ้น")
+        # <<<< แก้ไข: เพิ่ม Emoji หน้าชื่อไอเทม >>>>
+        emoji = ITEM_EMOJIS.get(item_name, "🔹") # ใช้ "🔹" เป็น default ถ้าไม่พบ emoji
+        summary_lines.append(f"{emoji} {item_name}: **{qty}** ชิ้น")
+
+
 
     # Paginate if too long, or just show a subset
     max_items_in_embed = 7 # Adjust as needed
@@ -547,8 +552,15 @@ async def daily_panel_refresh():
 async def show_inventory_command(ctx):
     load_data() # Ensure latest data
     embed = discord.Embed(title="📦 สรุปยอดคลังกลางทั้งหมด 📦", color=discord.Color.gold())
-    item_list_str = "\n".join([f"• {name}: **{team_inventory.get(name, 0)}** ชิ้น" for name in AVAILABLE_ITEMS]) # Show all items
-    if not any(team_inventory.get(name, 0) > 0 for name in AVAILABLE_ITEMS):
+
+    item_list_lines = []
+    for name in AVAILABLE_ITEMS:
+        qty = team_inventory.get(name, 0)
+        emoji = ITEM_EMOJIS.get(name, "🔸") # ใช้ Emoji เริ่มต้นที่แตกต่างกันเล็กน้อยถ้าต้องการ
+        item_list_lines.append(f"{emoji} {name}: **{qty}** ชิ้น")
+    
+    item_list_str = "\n".join(item_list_lines)
+    if not any(team_inventory.get(name, 0) > 0 for name in AVAILABLE_ITEMS): # ตรวจสอบว่ามีของหรือไม่
         item_list_str = "ยังไม่มีของในคลัง"
 
     embed.add_field(name="รายการของในคลัง", value=item_list_str, inline=False)
