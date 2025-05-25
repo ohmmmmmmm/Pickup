@@ -25,8 +25,8 @@ bot = commands.Bot(command_prefix='$$', intents=intents)
 TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 
 # --- Inventory System Variables ---
-AVAILABLE_ITEMS = [
-                   "เงินแดง": "🩸", 
+AVAILABLE_ITEMS = {
+                   "เงินแดง": "🩸",
                    "ไวเบรเนียม": "🛡️",
                    "เกาะ": "🧥",   
                    "AED": "❤️‍🩹",  
@@ -39,7 +39,7 @@ AVAILABLE_ITEMS = [
                    "เพชร": "💍",  
                    "เหล็ก": "⛓️", 
                    "เศษเหล็ก": "🔩"
-                   ]
+}
 AVAILABLE_ITEMS.sort()
 LEADER_ROLES = ["หัวหน้าแก๊ง", "เบิกของ" ] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
 
