@@ -25,7 +25,21 @@ bot = commands.Bot(command_prefix='$$', intents=intents)
 TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 
 # --- Inventory System Variables ---
-AVAILABLE_ITEMS = ["เครื่องปั้ม", "ยา", "ผ้า", "ชุดเกราะ", "ไวเบ", "เงินแดง", "อุปกรณ์ซ่อมรถ"]
+AVAILABLE_ITEMS = [
+                    "เงินแดง": "🩸", 
+                   "ไวเบรเนียม": "🛡️" 
+                   "เกาะ": "🧥",   
+                   "AED": "❤️‍🩹",  
+                   "Painkiller": "💊",
+                   "ปูน": "🧱",
+                   "ไม้กระดาน": "🪵",
+                   "ทองคำ": "🥇",  
+                   "ทองแดง": "🥉",
+                   "ทับทิม": "💎",   
+                   "เพชร": "💍",  
+                   "เหล็ก": "⛓️", 
+                   "เศษเหล็ก": "🔩"
+                   ]
 AVAILABLE_ITEMS.sort()
 LEADER_ROLES = ["หัวหน้าแก๊ง", "เบิกของ" ] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
 
@@ -384,7 +398,13 @@ def create_control_panel_embed():
 
     embed.add_field(name="ยอดของในคลัง", value=summary_text, inline=False)
     embed.add_field(name="ยอดเงินคงเหลือ", value=f"**{team_bank.get('balance', 0):,}** บาท", inline=False) # Use .get for bank balance
-    embed.set_footer(text=f"อัปเดตล่าสุด: {datetime.now(TZ_BANGKOK).strftime('%d/%m/%Y %H:%M:%S')}")
+
+
+    current_time_str = datetime.now(TZ_BANGKOK).strftime('%d/%m/%Y %H:%M:%S')
+    footer_text = f"อัปเดตล่าสุด: {current_time_str} | Created by Juno"
+    embed.set_footer(text=footer_text)
+
+    
     if bot.user and bot.user.avatar:
         embed.set_thumbnail(url=bot.user.avatar.url)
     return embed
@@ -531,7 +551,11 @@ async def show_inventory_command(ctx):
 
     embed.add_field(name="รายการของในคลัง", value=item_list_str, inline=False)
     embed.add_field(name="ยอดเงินคงเหลือ", value=f"**{team_bank.get('balance', 0):,}** บาท", inline=False)
-    embed.set_footer(text=f"ข้อมูล ณ {datetime.now(TZ_BANGKOK).strftime('%d/%m/%Y %H:%M:%S')}")
+
+    current_time_str_inv = datetime.now(TZ_BANGKOK).strftime('%d/%m/%Y %H:%M:%S')
+    footer_text_inv = f"ข้อมูล ณ {current_time_str_inv} | Bot by Juno"
+    embed.set_footer(text=footer_text_inv)
+
     await ctx.send(embed=embed)
 
 @bot.command(name="บังคับรีเฟรชพาเนล", aliases=["forcepanel", "refreshpanel", "updatepanel"])
