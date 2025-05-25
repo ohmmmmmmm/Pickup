@@ -44,6 +44,8 @@ ITEM_EMOJIS = {
 }
 
 LEADER_ROLES = ["หัวหน้าแก๊ง", "เบิกของ" ] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
+LOW_ROLES = ["สมาชิกแก๊ง", "เบิกของ"] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
+
 
 TEAM_INVENTORY_FILE = 'team_inventory_dedicated.json'
 TEAM_BANK_FILE = 'team_bank.json'
@@ -358,16 +360,37 @@ class PersistentInventoryView(discord.ui.View):
 
     @discord.ui.button(label="📥 ฝากของ", style=discord.ButtonStyle.green, custom_id="persistent_deposit_item_v2")
     async def deposit_item_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # ตรวจสอบว่าผู้ใช้มี Role ที่อนุญาตหรือไม่
+        if not any(role.name in LOW_ROLES for role in interaction.user.roles):
+            # ถ้าไม่มี Role ที่ถูกต้อง ให้ส่งข้อความแจ้งเตือนและจบการทำงานของฟังก์ชันนี้
+            await interaction.response.send_message(f"🚫 คุณไม่มีสิทธิ์ฝากของ! (ต้องมี Role: {', '.join(LOW_ROLES)})", ephemeral=True)
+            return # ออกจากฟังก์ชัน deposit_item_button
+        # ถ้ามี Role ที่ถูกต้อง ให้ดำเนินการต่อ
         await self._handle_item_action(interaction, "deposit")
 
     @discord.ui.button(label="📤 เบิกของ", style=discord.ButtonStyle.red, custom_id="persistent_withdraw_item_v2")
     async def withdraw_item_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if not any(role.name in LEADER_ROLES for role in interaction.user.roles):
+            # ถ้าไม่มี Role ที่ถูกต้อง ให้ส่งข้อความแจ้งเตือนและจบการทำงานของฟังก์ชันนี้
+            await interaction.response.send_message(f"🚫 คุณไม่มีสิทธิ์ฝากของ! (ต้องมี Role: {', '.join(LEADER_ROLES)})", ephemeral=True)
+            return # ออกจากฟังก์ชัน deposit_item_button
+        # ถ้ามี Role ที่ถูกต้อง ให้ดำเนินการต่อ
         await self._handle_item_action(interaction, "withdraw")
+
+
 
     @discord.ui.button(label="💰 ฝากเงิน", style=discord.ButtonStyle.success, custom_id="persistent_deposit_money_v2")
     async def deposit_money_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         # No role check needed for deposit
+        if not any(role.name in LOW_ROLES for role in interaction.user.roles):
+            # ถ้าไม่มี Role ที่ถูกต้อง ให้ส่งข้อความแจ้งเตือนและจบการทำงานของฟังก์ชันนี้
+            await interaction.response.send_message(f"🚫 คุณไม่มีสิทธิ์ฝากเงิน! (ต้องมี Role: {', '.join(LOW_ROLES)})", ephemeral=True)
+            return # ออกจากฟังก์ชัน deposit_item_button
+        # ถ้ามี Role ที่ถูกต้อง ให้ดำเนินการต่อ
         await interaction.response.send_modal(BankTransactionModal("deposit", "ฝากเงินเข้าคลัง", interaction.channel))
+
+
+
 
     @discord.ui.button(label="💸 ถอนเงิน", style=discord.ButtonStyle.danger, custom_id="persistent_withdraw_money_v2")
     async def withdraw_money_button(self, interaction: discord.Interaction, button: discord.ui.Button):
