@@ -389,7 +389,8 @@ def create_control_panel_embed():
         qty = team_inventory.get(item_name, 0)
         # <<<< แก้ไข: เพิ่ม Emoji หน้าชื่อไอเทม >>>>
         emoji = ITEM_EMOJIS.get(item_name, "🔹") # ใช้ "🔹" เป็น default ถ้าไม่พบ emoji
-        summary_lines.append(f"{emoji} {item_name}: **{qty}** ชิ้น")
+
+        summary_lines.append(f"{emoji} {item_name}: `{qty} ชิ้น`") # <--- เพิ่ม backticks ครอบจำนวนและหน่วย
 
 
 
@@ -402,7 +403,7 @@ def create_control_panel_embed():
 
 
     embed.add_field(name="ยอดของในคลัง", value=summary_text, inline=False)
-    embed.add_field(name="ยอดเงินคงเหลือ", value=f"**{team_bank.get('balance', 0):,}** บาท", inline=False) # Use .get for bank balance
+    embed.add_field(name="ยอดเงินคงเหลือ", value=f"**`{team_bank.get('balance', 0):,} บาท`**", inline=False) # <--- เพิ่ม backticks ให้ยอดเงินด้วย
 
 
     current_time_str = datetime.now(TZ_BANGKOK).strftime('%d/%m/%Y %H:%M:%S')
