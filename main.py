@@ -25,14 +25,14 @@ bot = commands.Bot(command_prefix='$$', intents=intents)
 TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 
 # --- Inventory System Variables ---
-AVAILABLE_ITEMS = ["ไม้", "หิน", "เหล็ก", "ยา", "กระสุน", "ผ้า", "อาหารหลัก", "ชุดเกราะ", "ปืนไรเฟิล", "ระเบิดมือ", "กับดัก", "อุปกรณ์ซ่อม"]
+AVAILABLE_ITEMS = ["เครื่องปั้ม", "ยา", "ผ้า", "ชุดเกราะ", "ไวเบ", "เงินแดง", "อุปกรณ์ซ่อมรถ"]
 AVAILABLE_ITEMS.sort()
-LEADER_ROLES = ["หัวหน้าแก๊ง", "รองหัวหน้า", "Officer", "แกนนำ"] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
+LEADER_ROLES = ["หัวหน้าแก๊ง", "Queen", "Boos"] # ตรวจสอบว่าชื่อ Role ตรงกับใน Discord Server
 
 TEAM_INVENTORY_FILE = 'team_inventory_dedicated.json'
 TEAM_BANK_FILE = 'team_bank.json'
 
-CONTROL_PANEL_CHANNEL_ID = 1375820779350003712  # <<-- ตรวจสอบว่า ID นี้ถูกต้อง และบอทมีสิทธิ์ในห้องนี้
+CONTROL_PANEL_CHANNEL_ID = 1376171932361293994  # <<-- ตรวจสอบว่า ID นี้ถูกต้อง และบอทมีสิทธิ์ในห้องนี้
 CONTROL_PANEL_MESSAGE_ID_FILE = 'control_panel_message_id.txt'
 
 # --- Data Structures ---
