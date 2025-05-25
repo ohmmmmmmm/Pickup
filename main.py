@@ -26,8 +26,8 @@ TZ_BANGKOK = pytz.timezone('Asia/Bangkok')
 
 # --- Inventory System Variables ---
 AVAILABLE_ITEMS = [
-                    "เงินแดง": "🩸", 
-                   "ไวเบรเนียม": "🛡️" 
+                   "เงินแดง": "🩸", 
+                   "ไวเบรเนียม": "🛡️",
                    "เกาะ": "🧥",   
                    "AED": "❤️‍🩹",  
                    "Painkiller": "💊",
@@ -378,7 +378,7 @@ class PersistentInventoryView(discord.ui.View):
 # --- Embed Creation ---
 def create_control_panel_embed():
     load_data() # Load latest data before creating embed
-    embed = discord.Embed(title="📦 ระบบคลังกลางทีม (v2) 📦", description="คลิกปุ่มด้านล่างเพื่อดำเนินการ", color=discord.Color.blue()) # Changed color
+    embed = discord.Embed(title="📦 คลังกลางทีม 1M X 32Bit 📦", description="คลิกปุ่มด้านล่างเพื่อดำเนินการ", color=discord.Color.blue()) # Changed color
     # Displaying items: show all items with their quantities, even if 0, or only > 0?
     # For this example, show all defined items.
     summary_lines = []
