@@ -393,15 +393,13 @@ def create_control_panel_embed():
 
 
 
-    # Paginate if too long, or just show a subset
-    max_items_in_embed = 7 # Adjust as needed
-    if len(summary_lines) > max_items_in_embed:
-        summary_text = "\n".join(summary_lines[:max_items_in_embed])
-        summary_text += f"\n*และอีก {len(summary_lines) - max_items_in_embed} รายการ... ใช้คำสั่ง {bot.command_prefix}ดูของ เพื่อดูทั้งหมด*"
-    elif summary_lines:
+    if summary_lines:
         summary_text = "\n".join(summary_lines)
     else:
         summary_text = "ยังไม่มีของในคลัง / ไม่มีไอเทมที่กำหนด"
+
+
+
 
     embed.add_field(name="ยอดของในคลัง", value=summary_text, inline=False)
     embed.add_field(name="ยอดเงินคงเหลือ", value=f"**{team_bank.get('balance', 0):,}** บาท", inline=False) # Use .get for bank balance
